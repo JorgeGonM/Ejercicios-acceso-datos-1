@@ -35,35 +35,35 @@ public class Ejercicio1_1 {
         for (File elemento : contenido) {
             StringBuilder permisos = new StringBuilder();
 
-            // 1. Indicar si es directorio ('d') o fichero ('-')
+            //Indicar si es directorio ('d') o fichero ('-')
             if (elemento.isDirectory()) {
                 permisos.append("d");
             } else {
                 permisos.append("-");
             }
 
-            // 2. Permiso de lectura ('r' o '-')
+            //Permiso de lectura ('r' o '-')
             if (elemento.canRead()) {
                 permisos.append("r");
             } else {
                 permisos.append("-");
             }
 
-            // 3. Permiso de escritura ('w' o '-')
+            //Permiso de escritura ('w' o '-')
             if (elemento.canWrite()) {
                 permisos.append("w");
             } else {
                 permisos.append("-");
             }
 
-            // 4. Permiso de ejecución ('x' o '-')
+            //Permiso de ejecución ('x' o '-')
             if (elemento.canExecute()) {
                 permisos.append("x");
             } else {
                 permisos.append("-");
             }
 
-            // Mostrar el resultado en pantalla
+            //Mostramos el resultado en pantalla
             System.out.println(permisos.toString() + " " + elemento.getName());
         }
 

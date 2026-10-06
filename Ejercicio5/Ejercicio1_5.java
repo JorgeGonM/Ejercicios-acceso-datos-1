@@ -12,7 +12,7 @@ import java.util.TreeSet;
 public class Ejercicio1_5 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Introduce la ruta del fichero de entrada (ej. coches.txt): ");
+        System.out.print("Introduce la ruta del fichero de entrada: ");
         String rutaEntrada = scanner.nextLine();
         String rutaSalida = "marcas.txt";
 
@@ -20,14 +20,14 @@ public class Ejercicio1_5 {
         // Cada marca tendrá un TreeSet para que sus modelos también estén ordenados y evitar duplicados.
         Map<String, Set<String>> agrupacion = new TreeMap<>();
 
-        // 1. Leer el fichero de entrada y procesar cada línea
+        //Leemos el fichero de entrada y procesar cada línea
         try (BufferedReader br = new BufferedReader(new FileReader(rutaEntrada))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 linea = linea.trim();
                 if (linea.isEmpty()) continue;
 
-                // Separar la marca del modelo usando el primer espacio como delimitador
+                //Separamos la marca del modelo usando el primer espacio como delimitador
                 int primerEspacio = linea.indexOf(' ');
                 
                 if (primerEspacio != -1) {
@@ -36,9 +36,11 @@ public class Ejercicio1_5 {
 
                     // Si la marca no existe en el mapa, la inicializamos con un TreeSet
                     agrupacion.putIfAbsent(marca, new TreeSet<>());
+
                     // Añadimos el modelo al conjunto de esa marca
                     agrupacion.get(marca).add(modelo);
                 } else {
+
                     // Si la línea consta de una sola palabra, la tomamos como marca sin modelo
                     agrupacion.putIfAbsent(linea, new TreeSet<>());
                 }
@@ -48,7 +50,7 @@ public class Ejercicio1_5 {
             return;
         }
 
-        // 2. Escribir el resultado formateado en marcas.txt
+        //Escribimos el resultado formateado en marcas.txt
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaSalida))) {
             for (Map.Entry<String, Set<String>> entry : agrupacion.entrySet()) {
                 String marca = entry.getKey();

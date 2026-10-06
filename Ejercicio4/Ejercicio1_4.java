@@ -11,12 +11,13 @@ public class Ejercicio1_4 {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Introduce la ruta del fichero del test (ej. test.txt): ");
+        System.out.print("Introduce la ruta del fichero del test: ");
         String ruta = scanner.nextLine();
 
+        // Lista para almacenar los resultados de cada alumno
         List<ResultadoAlumno> alumnos = new ArrayList<>();
 
-        // Contadores para el resumen
+        // Contadores para el resumen de calificaciones, usando LinkedHashMap para mantener el orden de inserción 
         Map<String, Integer> contadores = new LinkedHashMap<>();
         contadores.put("Excelente", 0);
         contadores.put("Notable", 0);
@@ -25,6 +26,7 @@ public class Ejercicio1_4 {
         contadores.put("Suspenso", 0);
 
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
+
             // La primera línea contiene las respuestas correctas del test
             String respuestasCorrectas = br.readLine();
 
@@ -36,7 +38,7 @@ public class Ejercicio1_4 {
             respuestasCorrectas = respuestasCorrectas.trim();
             String lineaAlumno;
 
-            // Procesar cada alumno (siguientes líneas)
+            // Procesar cada alumno, las siguientes lineas
             while ((lineaAlumno = br.readLine()) != null) {
                 lineaAlumno = lineaAlumno.trim();
                 if (lineaAlumno.isEmpty()) continue;
@@ -54,9 +56,11 @@ public class Ejercicio1_4 {
 
                 // Calcular la nota
                 double nota = calcularNota(respuestasCorrectas, respuestasAlumno);
+
                 // Determinar la calificación según la escala
                 String calificacion = obtenerCalificacion(nota);
 
+                // Guardar el resultado del alumno
                 alumnos.add(new ResultadoAlumno(idAlumno, nota, calificacion));
 
                 // Incrementar contador de la categoría
@@ -68,7 +72,8 @@ public class Ejercicio1_4 {
             return;
         }
 
-        // 1. Mostrar resultados individuales de cada alumno
+        //Mostramos los resultados individuales de cada alumno
+        //Formato de salida hecho para que quede alineado y sea fácil de leer
         System.out.println("\n--- RESULTADOS DEL CUESTIONARIO ---");
         System.out.printf("%-12s %-8s %-12s\n", "ID ALUMNO", "NOTA", "CALIFICACIÓN");
         System.out.println("------------------------------------");
@@ -76,7 +81,7 @@ public class Ejercicio1_4 {
             System.out.printf("%-12s %-8.2f %-12s\n", a.getId(), a.getNota(), a.getCalificacion());
         }
 
-        // 2. Mostrar tabla resumen con porcentajes
+        //Mostramos la tabla resumen con porcentajes
         int totalAlumnos = alumnos.size();
         System.out.println("\n====================================");
         System.out.println("          TABLA RESUMEN             ");
@@ -85,6 +90,8 @@ public class Ejercicio1_4 {
         System.out.println("------------------------------------");
 
         if (totalAlumnos > 0) {
+
+            // Calculamos y mostramos el porcentaje de cada calificación
             for (Map.Entry<String, Integer> entry : contadores.entrySet()) {
                 String calif = entry.getKey();
                 int cantidad = entry.getValue();
@@ -103,6 +110,7 @@ public class Ejercicio1_4 {
     // Puntuación: Acierto +0.5 | Fallo -0.15 | Blanco 0.0 (mínimo 0 puntos)
     private static double calcularNota(String solucion, String respuestas) {
         double nota = 0.0;
+
         int minLongitud = Math.min(solucion.length(), respuestas.length());
 
         for (int i = 0; i < minLongitud; i++) {

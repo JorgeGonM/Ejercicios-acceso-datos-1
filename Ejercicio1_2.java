@@ -14,7 +14,7 @@ public class Ejercicio1_2 {
         String entrada = scanner.nextLine();
 
         if (entrada.isEmpty()) {
-            System.out.println("Error: No has introducido ningún carácter.");
+            System.out.println("Error: No has introducido ningún caracter.");
             return;
         }
 
@@ -23,10 +23,12 @@ public class Ejercicio1_2 {
 
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
             int codigo;
-            // Lee carácter a carácter (devuelve -1 al llegar al final del fichero)
+
+            //Lee carácter a carácter y devuelve -1 al llegar al final del fichero
             while ((codigo = br.read()) != -1) {
                 char caracterActual = (char) codigo;
                 if (caracterActual == caracterBuscado) {
+                    //Va contando las veces que aparece el carácter buscado
                     contador++;
                 }
             }

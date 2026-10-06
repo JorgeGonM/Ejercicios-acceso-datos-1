@@ -14,6 +14,7 @@ public class Ejercicio1_2Variante {
         System.out.print("Introduce la ruta del fichero: ");
         String ruta = scanner.nextLine();
 
+        //Creamos un mapa para almacenar la frecuencia de cada carácter
         Map<Character, Integer> frecuencias = new HashMap<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
@@ -21,11 +22,11 @@ public class Ejercicio1_2Variante {
             while ((codigo = br.read()) != -1) {
                 char c = (char) codigo;
                 
-                // Ignoramos saltos de línea si queremos contar solo texto visible
+                //Ignoramos los saltos de línea para contar solo los caracteres visibles
                 if (c == '\r' || c == '\n') {
                     continue;
                 }
-
+                //Actualizamos la frecuencia del carácter en el mapa, si ya existe, incrementamos su contador; si no, lo inicializamos a 1.
                 frecuencias.put(c, frecuencias.getOrDefault(c, 0) + 1);
             }
 
@@ -34,10 +35,11 @@ public class Ejercicio1_2Variante {
                 return;
             }
 
-            // Buscar el carácter con el número máximo de ocurrencias
+            //Buscamos el carácter con el número máximo de ocurrencias
             char masUsado = ' ';
             int maxFrecuencia = -1;
-
+            
+            //Iteramos sobre las entradas del mapa para encontrar el carácter más usado y su frecuencia
             for (Map.Entry<Character, Integer> entry : frecuencias.entrySet()) {
                 if (entry.getValue() > maxFrecuencia) {
                     maxFrecuencia = entry.getValue();
